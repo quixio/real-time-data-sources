@@ -1,9 +1,12 @@
+from quixstreams import SecurityOptions, KafkaStreamingClient
 import quixstreams as qx
 import os
 import pandas as pd
 
 
-client = qx.QuixStreamingClient()
+kafka_password = os.environ["kafka_password"]
+security = SecurityOptions("./certs", "", kafka_password)
+client = KafkaStreamingClient('kafka-k1.quix.io:9093,kafka-k2.quix.io:9093,kafka-k3.quix.io:9093', security)
 
 topic_consumer = client.get_topic_consumer(os.environ["input"], consumer_group = "empty-transformation")
 
