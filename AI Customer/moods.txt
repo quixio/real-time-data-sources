@@ -1,0 +1,12 @@
+friendly
+happy
+satisfied
+unhappy
+reasonable
+dissatisfied
+unreasonable
+sad
+angry
+unfriendly
+frustrated
+annoyed

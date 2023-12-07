@@ -1,0 +1,60 @@
+# Quix Project Descriptor
+# This file describes the data pipeline and configuration of resources of a Quix Project.
+
+metadata:
+  version: 1.0
+
+# This section describes the Deployments of the data pipeline
+deployments:
+  - name: AI Customer
+    application: AI Customer
+    deploymentType: Service
+    version: f6c7bc89bd58919862b40c0049189161041b13c1
+    resources:
+      cpu: 5000
+      memory: 8000
+      replicas: 1
+    state:
+      enabled: true
+      size: 6
+    desiredStatus: Running
+    variables:
+      - name: topic
+        inputType: OutputTopic
+        description: This is the output topic to write data to
+        required: true
+        value: ai-chat-history
+      - name: conversation_length
+        inputType: FreeText
+        description: Maximum conversation length, after which the conversation resets.
+        required: true
+        value: 15
+  - name: AI Support Agent
+    application: AI Customer Support Agent
+    deploymentType: Service
+    version: 1c31cb055975405c95250c1a7748e09baa15762a
+    resources:
+      cpu: 5000
+      memory: 8000
+      replicas: 1
+    state:
+      enabled: true
+      size: 6
+    desiredStatus: Running
+    variables:
+      - name: topic
+        inputType: OutputTopic
+        description: This is the output topic to write data to
+        required: true
+        value: ai-chat-history
+  
+# This section describes the Topics of the data pipeline
+topics:
+  - name: ai-chat-history
+    persisted: true
+    configuration:
+      partitions: 2
+      replicationFactor: 2
+      retentionInMinutes: 60
+      retentionInBytes: 52428800
+ 

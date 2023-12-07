@@ -1,0 +1,11 @@
+name: AI Support Agent
+language: python
+variables:
+  - name: topic
+    inputType: OutputTopic
+    description: This is the output topic to write data to
+    defaultValue: ai-chat-history
+    required: true
+dockerfile: build/dockerfile
+runEntryPoint: main.py
+defaultFile: main.py
