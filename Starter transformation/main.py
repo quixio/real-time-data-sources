@@ -5,9 +5,9 @@ import pandas as pd
 
 
 kafka_password = os.environ["kafka_password"]
-kafka_user = os.environ["kafka_user"]
+kafka_username = os.environ["kafka_username"]
 
-security = SecurityOptions("./certs", kafka_user, kafka_password)
+security = SecurityOptions("./certs", kafka_username, kafka_password)
 client = KafkaStreamingClient('kafka-k1.quix.io:9093,kafka-k2.quix.io:9093,kafka-k3.quix.io:9093', security)
 
 topic_consumer = client.get_topic_consumer(os.environ["input"], consumer_group = "empty-transformation")
