@@ -9,7 +9,7 @@ variables:
   - name: kafka_username
     inputType: Secret
     description: ''
-    defaultValue: ''
+    defaultValue: kafka_username
     required: false
   - name: kafka_password
     inputType: Secret
