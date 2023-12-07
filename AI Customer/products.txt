@@ -1,0 +1,15 @@
+printer
+vacuum cleaner
+television
+keyboard
+laptop
+telephone
+washing machine
+air conditioner
+induction cooker
+microwave oven
+steamer
+ceiling fan
+kettle
+refrigerator
+wine cooler
