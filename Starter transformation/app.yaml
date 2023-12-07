@@ -11,6 +11,11 @@ variables:
     description: ''
     defaultValue: ''
     required: false
+  - name: kafka_password
+    inputType: Secret
+    description: ''
+    defaultValue: ''
+    required: false
 dockerfile: build/dockerfile
 runEntryPoint: main.py
 defaultFile: main.py
