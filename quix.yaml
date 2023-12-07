@@ -47,7 +47,7 @@ deployments:
         description: This is the output topic to write data to
         required: true
         value: ai-chat-history
-  
+
 # This section describes the Topics of the data pipeline
 topics:
   - name: ai-chat-history
@@ -57,4 +57,3 @@ topics:
       replicationFactor: 2
       retentionInMinutes: 60
       retentionInBytes: 52428800
- 
