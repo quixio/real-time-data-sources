@@ -1,0 +1,11 @@
+name: Demo Data
+language: python
+variables:
+  - name: Topic
+    inputType: OutputTopic
+    description: Name of the output topic to write into
+    defaultValue: enhanced-ai-chat-history
+    required: true
+dockerfile: build/dockerfile
+runEntryPoint: main.py
+defaultFile: main.py
