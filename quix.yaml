@@ -50,7 +50,7 @@ deployments:
   - name: AI chat websocket server
     application: AI chat websocket server
     deploymentType: Service
-    version: c0d23512563260fbf9bf70c45ef58169bafc7e1f
+    version: 305e1531b1b570cfa4b19ae904fe29acc8340b4d
     resources:
       cpu: 200
       memory: 200
