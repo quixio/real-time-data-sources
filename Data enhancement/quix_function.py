@@ -18,17 +18,6 @@ class QuixFunction:
     # Callback triggered for each new timeseries data
     def on_dataframe_handler(self, stream_consumer: qx.StreamConsumer, df: pd.DataFrame):
         
-        output_df = pd.DataFrame()
-        output_df["timestamp"] = df["timestamp"]
+        df["quix"] = "This data source is provided for free by Quix. Goto https://quix.io for more information."
 
-        if "TAG__LapNumber" in df.columns:
-            output_df["TAG__LapNumber"] = df["TAG__LapNumber"]
-            
-        print(df)
-
-        # If braking force applied is more than 50%, we send True.
-        # update this code to apply your own logic or ML model processing
-        if "Brake" in df.columns:
-            output_df["HardBraking"] = df.apply(lambda row: "True" if row.Brake > 0.5 else "False", axis = 1)  
-
-        self.producer_stream.timeseries.buffer.publish(output_df)
+        self.producer_stream.timeseries.buffer.publish(df)
