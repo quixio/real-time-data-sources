@@ -6,6 +6,7 @@ import uuid
 import pandas as pd
 import quixstreams as qx
 import asyncio
+import uvicorn
 
 
 app = FastAPI()
@@ -91,3 +92,6 @@ topic_consumer.on_stream_received = on_stream_received_handler
 
 # subscribe to data arriving at the topic_consumer
 topic_consumer.subscribe()
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
