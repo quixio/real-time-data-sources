@@ -65,15 +65,6 @@ deployments:
         description: Input topic
         required: true
         value: ai-chat-history
-  - name: Mosquito MQTT
-    application: Mosquito MQTT
-    deploymentType: Job
-    version: afc082ad123ae91663984b6f2cfa54bdcac433cb
-    resources:
-      cpu: 200
-      memory: 500
-      replicas: 1
-    variables: []
 
 # This section describes the Topics of the data pipeline
 topics:
