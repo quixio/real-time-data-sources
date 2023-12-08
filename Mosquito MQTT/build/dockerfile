@@ -1,9 +1,7 @@
 FROM eclipse-mosquitto
 
-COPY --from=git /project .
-
 # Copy custom configuration file
-COPY mosquitto.conf /mosquitto/config/mosquitto.conf
+COPY --from=git /project/mosquitto.conf /mosquitto/config/mosquitto.conf
 
 # Set the entrypoint
 ENTRYPOINT ["/usr/sbin/mosquitto", "-c", "/mosquitto/config/mosquitto.conf"]
