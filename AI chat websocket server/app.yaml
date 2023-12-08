@@ -1,0 +1,11 @@
+name: AI chat websocket server
+language: python
+variables:
+  - name: input
+    inputType: InputTopic
+    description: Input topic
+    defaultValue: ai-chat-history
+    required: true
+dockerfile: build/dockerfile
+runEntryPoint: main.py
+defaultFile: main.py
