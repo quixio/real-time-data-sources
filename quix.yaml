@@ -62,6 +62,19 @@ deployments:
         description: Input topic
         required: true
         value: ai-chat-history
+  - name: Mosquito MQTT
+    application: Mosquito MQTT
+    deploymentType: Service
+    version: 3918a806d70ffd4ee83a3e20a06aa96d82211a35
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    publicAccess:
+      enabled: true
+      urlPrefix: mosquitomqtt-3918a80
+    desiredStatus: Running
+    variables: []
 
 # This section describes the Topics of the data pipeline
 topics:
