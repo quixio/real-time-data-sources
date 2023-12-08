@@ -50,11 +50,14 @@ deployments:
   - name: AI chat websocket server
     application: AI chat websocket server
     deploymentType: Service
-    version: 517ce6e861805fffd77c82c0c914dd755a5184be
+    version: a60c75c48db263e9bb0a04aff22eb36a382e24b5
     resources:
       cpu: 200
       memory: 200
       replicas: 1
+    publicAccess:
+      enabled: true
+      urlPrefix: ai-chat-wss
     desiredStatus: Stopped
     variables:
       - name: input
