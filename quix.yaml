@@ -65,7 +65,7 @@ deployments:
   - name: Mosquito MQTT
     application: Mosquito MQTT
     deploymentType: Service
-    version: 3918a806d70ffd4ee83a3e20a06aa96d82211a35
+    version: afc082ad123ae91663984b6f2cfa54bdcac433cb
     resources:
       cpu: 200
       memory: 500
