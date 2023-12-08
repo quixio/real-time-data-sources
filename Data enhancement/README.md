@@ -1,10 +1,6 @@
-# Event Detection
+# Data enhancement
 
-[This project](https://github.com/quixio/quix-samples/tree/main/python/transformations/Event-Detection) is an example of how to create a simple pub/sub model using Quix.
-
-It shows how to make real-time decisions on your data by looking at the `Brake` value and if a condition is met will output `HardBraking` to the output topic. 
-
-You can adapt this code to suit your needs.
+Enhance the data by adding additional information.
 
 ## How to run
 
@@ -16,8 +12,8 @@ Clicking `Edit code` on the Sample, forks the project to your own Git repo so yo
 
 The code sample uses the following environment variables:
 
-- **input**: This is the input topic for f1 data.
-- **output**: This is the output topic for hard braking events.
+- **input**: This is the input topic
+- **output**: This is the output topic
 
 ## Contribute
 
