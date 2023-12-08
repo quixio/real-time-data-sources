@@ -65,6 +65,26 @@ deployments:
         description: Input topic
         required: true
         value: ai-chat-history
+  - name: Data enhancement
+    application: Data enhancement
+    deploymentType: Service
+    version: 15f8445c4c1182197e99a86a39598fc49332c56e
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: Running
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: This is the input topic for f1 data
+        required: true
+        value: ai-chat-history
+      - name: output
+        inputType: OutputTopic
+        description: This is the output topic for hard braking events
+        required: true
+        value: enhanced-ai-chat-history
 
 # This section describes the Topics of the data pipeline
 topics:
