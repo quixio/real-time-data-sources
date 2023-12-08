@@ -17,7 +17,7 @@ deployments:
     state:
       enabled: true
       size: 6
-    desiredStatus: Running
+    desiredStatus: Stopped
     variables:
       - name: topic
         inputType: OutputTopic
@@ -40,7 +40,7 @@ deployments:
     state:
       enabled: true
       size: 6
-    desiredStatus: Running
+    desiredStatus: Stopped
     variables:
       - name: topic
         inputType: OutputTopic
@@ -58,7 +58,7 @@ deployments:
     publicAccess:
       enabled: true
       urlPrefix: ai-chat-wss
-    desiredStatus: Running
+    desiredStatus: Stopped
     variables:
       - name: input
         inputType: InputTopic
@@ -73,7 +73,7 @@ deployments:
       cpu: 200
       memory: 500
       replicas: 1
-    desiredStatus: Running
+    desiredStatus: Stopped
     variables:
       - name: input
         inputType: InputTopic
