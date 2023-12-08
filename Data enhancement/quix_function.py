@@ -18,6 +18,6 @@ class QuixFunction:
     # Callback triggered for each new timeseries data
     def on_dataframe_handler(self, stream_consumer: qx.StreamConsumer, df: pd.DataFrame):
         
-        df["quix"] = "This data source is provided for free by Quix. Goto https://quix.io for more information."
+        df["quix"] = "This data source is provided for free by Quix. Goto https://quix.io or the open source GutHub repo (https://github.com/quixio/real-time-data-sources) for more information."
 
         self.producer_stream.timeseries.buffer.publish(df)
