@@ -64,7 +64,7 @@ deployments:
         inputType: InputTopic
         description: Input topic
         required: true
-        value: ai-chat-history
+        value: enhanced-ai-chat-history
   - name: Data enhancement
     application: Data enhancement
     deploymentType: Service
