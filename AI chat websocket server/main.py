@@ -5,6 +5,8 @@ import os
 import uuid
 import pandas as pd
 import quixstreams as qx
+import asyncio
+
 
 app = FastAPI()
 
