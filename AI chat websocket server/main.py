@@ -5,6 +5,8 @@ import os
 import uuid
 import pandas as pd
 import quixstreams as qx
+import asyncio
+
 
 app = FastAPI()
 
@@ -58,7 +60,7 @@ async def websocket_endpoint_timeseries(websocket: WebSocket):
     websocket_connections_timeseries.append(websocket)
     try:
         while True:
-            await websocket.receive_text()
+            await asyncio.sleep(1)
     except WebSocketDisconnect:
         if websocket in websocket_connections_timeseries:
             websocket_connections_timeseries.remove(websocket)
@@ -70,7 +72,7 @@ async def websocket_endpoint_events(websocket: WebSocket):
     websocket_connections_events.append(websocket)
     try:
         while True:
-            await websocket.receive_text()
+            await asyncio.sleep(1)
     except WebSocketDisconnect:
         if websocket in websocket_connections_events:
             websocket_connections_events.remove(websocket)
