@@ -1,5 +1,7 @@
 FROM eclipse-mosquitto
 
+COPY --from=git /project .
+
 # Copy custom configuration file
 COPY mosquitto.conf /mosquitto/config/mosquitto.conf
 
