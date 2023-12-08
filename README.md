@@ -13,3 +13,5 @@ As a token of our appreciation for your collaboration, we are offering $200 of c
 This data source consists of 2 AI's using a Llama model from hugging face. 
 One AI is a customer who is having a problem with a recently purchased electronic item.
 The other AI is a support agent at ACME Electronics.
+
+The chats are available via this websocket API `wss://ai-chat-wss-demo-realtimedatasources-prod.deployments.quix.io/timeseries`
