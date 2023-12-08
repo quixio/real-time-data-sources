@@ -73,7 +73,7 @@ deployments:
     publicAccess:
       enabled: true
       urlPrefix: mosquitomqtt-3918a80
-    desiredStatus: Running
+    desiredStatus: Stopped
     variables: []
 
 # This section describes the Topics of the data pipeline
