@@ -58,7 +58,7 @@ deployments:
     publicAccess:
       enabled: true
       urlPrefix: ai-chat-wss
-    desiredStatus: Running
+    desiredStatus: Stopped
     variables:
       - name: input
         inputType: InputTopic
