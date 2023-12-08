@@ -9,7 +9,7 @@ variables:
   - name: output
     inputType: OutputTopic
     description: This is the output topic for hard braking events
-    defaultValue: hard-braking
+    defaultValue: enhanced-ai-chat-history
     required: true
 dockerfile: build/dockerfile
 runEntryPoint: main.py
