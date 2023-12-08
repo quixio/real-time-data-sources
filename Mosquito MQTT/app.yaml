@@ -1,11 +1,6 @@
 name: Mosquito MQTT
 language: python
-variables:
-  - name: input
-    inputType: InputTopic
-    description: This is the input topic for demo data
-    defaultValue: ''
-    required: true
+variables: []
 dockerfile: build/dockerfile
 runEntryPoint: main.py
 defaultFile: main.py
