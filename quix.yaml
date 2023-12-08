@@ -50,7 +50,7 @@ deployments:
   - name: AI chat websocket server
     application: AI chat websocket server
     deploymentType: Service
-    version: a60c75c48db263e9bb0a04aff22eb36a382e24b5
+    version: e5467a48e2e80ebccb5193aeed0c9618dc8af585
     resources:
       cpu: 200
       memory: 200
@@ -85,6 +85,7 @@ deployments:
         description: This is the output topic for hard braking events
         required: true
         value: enhanced-ai-chat-history
+
 # This section describes the Topics of the data pipeline
 topics:
   - name: ai-chat-history
