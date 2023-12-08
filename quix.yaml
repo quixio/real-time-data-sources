@@ -85,7 +85,6 @@ deployments:
         description: This is the output topic for hard braking events
         required: true
         value: enhanced-ai-chat-history
-
 # This section describes the Topics of the data pipeline
 topics:
   - name: ai-chat-history
