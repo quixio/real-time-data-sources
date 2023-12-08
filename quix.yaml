@@ -9,7 +9,7 @@ deployments:
   - name: AI Customer
     application: AI Customer
     deploymentType: Service
-    version: 7452e0be2d172f542fa47611658e7c4d1794ce1d
+    version: 12c0a6090127ad8dd058c9aa0ed99db8b7fa4137
     resources:
       cpu: 5000
       memory: 8000
@@ -32,7 +32,7 @@ deployments:
   - name: AI Support Agent
     application: AI Customer Support Agent
     deploymentType: Service
-    version: 7452e0be2d172f542fa47611658e7c4d1794ce1d
+    version: 12c0a6090127ad8dd058c9aa0ed99db8b7fa4137
     resources:
       cpu: 5000
       memory: 8000
@@ -47,7 +47,44 @@ deployments:
         description: This is the output topic to write data to
         required: true
         value: ai-chat-history
-  
+  - name: AI chat websocket server
+    application: AI chat websocket server
+    deploymentType: Service
+    version: a60c75c48db263e9bb0a04aff22eb36a382e24b5
+    resources:
+      cpu: 200
+      memory: 200
+      replicas: 1
+    publicAccess:
+      enabled: true
+      urlPrefix: ai-chat-wss
+    desiredStatus: Running
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Input topic
+        required: true
+        value: enhanced-ai-chat-history
+  - name: Data enhancement
+    application: Data enhancement
+    deploymentType: Service
+    version: 15f8445c4c1182197e99a86a39598fc49332c56e
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: Running
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: This is the input topic for f1 data
+        required: true
+        value: ai-chat-history
+      - name: output
+        inputType: OutputTopic
+        description: This is the output topic for hard braking events
+        required: true
+        value: enhanced-ai-chat-history
 # This section describes the Topics of the data pipeline
 topics:
   - name: ai-chat-history
@@ -57,4 +94,10 @@ topics:
       replicationFactor: 2
       retentionInMinutes: 60
       retentionInBytes: 52428800
- 
+  - name: enhanced-ai-chat-history
+    persisted: false
+    configuration:
+      partitions: 1
+      replicationFactor: 2
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
