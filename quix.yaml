@@ -75,3 +75,10 @@ topics:
       replicationFactor: 2
       retentionInMinutes: 60
       retentionInBytes: 52428800
+  - name: enhanced-ai-chat-history
+    persisted: false
+    configuration:
+      partitions: 1
+      replicationFactor: 2
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
