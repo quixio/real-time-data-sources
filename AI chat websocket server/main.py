@@ -103,3 +103,8 @@ topic_consumer.on_stream_received = on_stream_received_handler
 
 # subscribe to data arriving at the topic_consumer
 topic_consumer.subscribe()
+
+qx.App.run()
+
+
+
