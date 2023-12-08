@@ -1,3 +1,4 @@
 quixstreams==0.5.7
 websockets==12
 fastapi==0.104.1
+uvicorn
