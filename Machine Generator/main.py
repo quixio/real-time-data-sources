@@ -1,34 +1,214 @@
-import quixstreams as qx
-import time
-import datetime
-import math
+from bdb import GENERATOR_AND_COROUTINE_FLAGS
+import faulthandler
 import os
+import threading
+from threading import Event
 
 
-# Quix injects credentials automatically to the client. 
-# Alternatively, you can always pass an SDK token manually as an argument.
-client = qx.QuixStreamingClient()
+from random import  randint
+from time import sleep
+import logging
 
-# Open the output topic where to write data out
-topic_producer = client.get_topic_producer(topic_id_or_name = os.environ["output"])
+# import vendor-specfic modules
+from quixstreams import Application
+from quixstreams.models.serializers.quix import JSONSerializer, SerializationContext
+from faker import Faker
 
-# Set stream ID or leave parameters empty to get stream ID generated.
-stream = topic_producer.create_stream()
-stream.properties.name = "Hello World Python stream"
+# Initialize logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-# Add metadata about time series data you are about to send. 
-stream.timeseries.add_definition("ParameterA").set_range(-1.2, 1.2)
-stream.timeseries.buffer.time_span_in_milliseconds = 100
+# Create a Quix Application
+app = Application.Quix(consumer_group="machine_generator", auto_create_topics=True)
 
-print("Sending values for 30 seconds.")
+# Define a serializer for messages, using JSON Serializer for ease
+serializer = JSONSerializer()
 
-for index in range(0, 3000):
-    stream.timeseries \
-        .buffer \
-        .add_timestamp(datetime.datetime.utcnow()) \
-        .add_value("ParameterA", math.sin(index / 200.0) + math.sin(index) / 5.0) \
-        .publish()
-    time.sleep(0.01)
+# Define the topic using the "output" environment variable
+topic_name = os.environ["output"]
+topic = app.topic(topic_name)
 
-print("Closing stream")
-stream.close()
+fake = Faker()
+
+machine_id_counter = 1
+
+
+class machine():
+    def __init__ (self) -> None:
+        global machine_id_counter
+        self.machine_id = "machine" + str(machine_id_counter)
+        machine_id_counter+=1
+        self.temperature = 0
+        self.load = 0
+        self.power = 0
+        self.vibration = 0
+        self.barcode= fake.ean(length=8)
+        self.provider=fake.company()
+        self.fault = False
+        self.previous_fault_state = False
+
+    def toggle_fault(self):
+        self.previous_fault_state = self.fault
+        self.fault = not self.fault
+
+    def returnMachineID(self):
+        return self.machine_id
+
+   
+    def returnTemperature(self):
+        currentLoad = self.load
+        if currentLoad >= 190: self.temperature = randint(95, 120)
+        elif currentLoad > 110: self.temperature = randint(80, 90)
+        elif currentLoad >= 40: self.temperature = randint(35, 40)
+        elif currentLoad > 0: self.temperature = randint(29, 34)
+        else: self.temperature = 20
+        return self.temperature
+
+    def setLoad(self, load):
+        # TODO dont randomise    
+        self.load = load
+       
+
+    def returnPower(self):
+        currentLoad = self.load
+        if currentLoad >= 190: self.power = randint(400, 500)
+        elif currentLoad > 110: self.power = randint(300, 320)
+        elif currentLoad >= 40: self.power = randint(200, 220)
+        elif currentLoad == 0: self.power = 0
+        else: self.power = randint(180, 199)
+        
+        return self.power
+    
+        
+    def returnVibration(self):
+        currentLoad = self.load
+        if currentLoad >= 190: self.vibration = randint(500, 600)
+        elif currentLoad > 110: self.vibration = randint(300, 500)
+        elif currentLoad == 0: self.vibration  = 0
+        elif currentLoad >= 40: self.vibration = randint(80, 90)
+        else: self.vibration = randint(50, 79)
+        return self.vibration
+
+    def returnMachineHealth(self):
+        # trigger load first as needs to be constent:
+        return {"metadata":{"machineID": self.returnMachineID(), 
+                "barcode": self.barcode, "provider": self.provider}, 
+                "data": [ {"temperature": self.returnTemperature()}, 
+                         {"load": self.load}, 
+                         {"power": self.returnPower()}, 
+                         {"vibration": self.returnVibration()}]
+                         }
+
+
+
+def runMachine(m):
+    # KAFKA_BROKER = os.getenv('KAFKA_BROKER', "localhost:9092")
+    # KAFKA_TOPIC = os.getenv('KAFKA_TOPIC', "machine_topic")
+    counter = 0
+    counter2 = 0
+
+    # Create a Kafka producer instance
+    kafkaProducer = KafkaProducer(
+        bootstrap_servers=[KAFKA_BROKER],
+        value_serializer=lambda v: json.dumps(v).encode('utf-8')
+    )
+    
+    sleeptime = 1
+    m.setLoad(randint(10, 50))
+    increasing = True
+    
+
+    while True:
+
+        # Check if fault state has changed from True to False
+        if m.previous_fault_state and not m.fault:
+            m.setLoad(50)
+            m.previous_fault_state = False
+
+        # Chance of fault
+        if m.fault:
+            if counter2 == 5:
+                current_load = m.load
+                if current_load < 200:
+                    new_load = min(current_load + 20, 200)
+                    m.setLoad(new_load)
+                counter2 = 0
+        else:
+            if counter2 == 5:
+                # Gradually change load between 50 and 99
+                current_load = m.load
+                if increasing:
+                    new_load = current_load + 5
+                    if new_load >= 99:
+                        increasing = False
+                else:
+                    new_load = current_load - 5
+                    if new_load <= 50:
+                        increasing = True
+                
+                m.setLoad(new_load)
+                counter2 = 0
+        
+                message_key = f"INFLUX_DATA_{str(random.randint(1, 100)).zfill(3)}_{index}"
+
+        # Publish messages to Kafka topic
+        check_machine = m.returnMachineHealth()
+
+        # Serialize row value to bytes
+        serialized_value = serializer(
+            value=check_machine, ctx=SerializationContext(topic=topic.name)
+        )
+
+        # publish the data to the topic
+        producer.produce(
+            topic=topic.name,
+            key=message_key,
+            value=serialized_value,
+        )
+        
+        sleep(sleeptime)
+        counter = counter + 1
+        counter2 = counter2 + 1
+
+
+def main():
+    """
+    Read data from the Query and publish it to Kafka
+    """
+
+    # Create a pre-configured Producer object.
+    # Producer is already setup to use Quix brokers.
+    # It will also ensure that the topics exist before producing to them if
+    # Application.Quix is initialized with "auto_create_topics=True".
+    
+
+    with app.get_producer() as producer:
+    # Iterate over the data from query result
+        for df in get_data():
+
+            # Generate a unique message_key for each row
+            for index, row in df.iterrows():
+                message_key = f"INFLUX_DATA_{str(random.randint(1, 100)).zfill(3)}_{index}"
+
+                # Convert the row to a dictionary
+                row_data = row.to_dict()
+
+                # Serialize row value to bytes
+                serialized_value = serializer(
+                    value=row_data, ctx=SerializationContext(topic=topic.name)
+                )
+
+                # publish the data to the topic
+                producer.produce(
+                    topic=topic.name,
+                    key=message_key,
+                    value=serialized_value,
+                )
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("Exiting.")
+
+
