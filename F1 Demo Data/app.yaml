@@ -1,0 +1,11 @@
+name: F1 Demo Data
+language: csharp
+variables:
+  - name: Topic
+    inputType: OutputTopic
+    description: Name of the output topic to write into
+    defaultValue: f1-data
+    required: true
+dockerfile: dockerfile
+runEntryPoint: Bridge.Console.csproj
+defaultFile: Bridge.Console/Program.cs
