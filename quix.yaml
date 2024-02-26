@@ -123,3 +123,10 @@ topics:
       replicationFactor: 1
       retentionInMinutes: 480
       retentionInBytes: 52428800
+  - name: machine-generator-output
+    persisted: false
+    configuration:
+      partitions: 1
+      replicationFactor: 1
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
