@@ -147,17 +147,18 @@ def runMachine(m):
         # Publish messages to Kafka topic
         check_machine = m.returnMachineHealth()
 
-        # Serialize row value to bytes
-        serialized_value = serializer(
-            value=check_machine, ctx=SerializationContext(topic=topic.name)
-        )
+        with app.get_producer():
+            # Serialize row value to bytes
+            serialized_value = serializer(
+                value=check_machine, ctx=SerializationContext(topic=topic.name)
+            )
 
-        # publish the data to the topic
-        producer.produce(
-            topic=topic.name,
-            key=message_key,
-            value=serialized_value,
-        )
+            # publish the data to the topic
+            producer.produce(
+                topic=topic.name,
+                key=message_key,
+                value=serialized_value,
+            )
         
         sleep(sleeptime)
         counter = counter + 1
