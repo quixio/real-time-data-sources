@@ -107,12 +107,6 @@ def runMachine(m):
     counter = 0
     counter2 = 0
 
-    # Create a Kafka producer instance
-    kafkaProducer = KafkaProducer(
-        bootstrap_servers=[KAFKA_BROKER],
-        value_serializer=lambda v: json.dumps(v).encode('utf-8')
-    )
-    
     sleeptime = 1
     m.setLoad(randint(10, 50))
     increasing = True
@@ -149,7 +143,7 @@ def runMachine(m):
                 m.setLoad(new_load)
                 counter2 = 0
         
-                message_key = f"INFLUX_DATA_{str(random.randint(1, 100)).zfill(3)}_{index}"
+        message_key = f"INFLUX_DATA_{str(random.randint(1, 100)).zfill(3)}_{index}"
 
         # Publish messages to Kafka topic
         check_machine = m.returnMachineHealth()
@@ -169,41 +163,6 @@ def runMachine(m):
         sleep(sleeptime)
         counter = counter + 1
         counter2 = counter2 + 1
-
-
-def main():
-    """
-    Read data from the Query and publish it to Kafka
-    """
-
-    # Create a pre-configured Producer object.
-    # Producer is already setup to use Quix brokers.
-    # It will also ensure that the topics exist before producing to them if
-    # Application.Quix is initialized with "auto_create_topics=True".
-    
-
-    with app.get_producer() as producer:
-    # Iterate over the data from query result
-        for df in get_data():
-
-            # Generate a unique message_key for each row
-            for index, row in df.iterrows():
-                message_key = f"INFLUX_DATA_{str(random.randint(1, 100)).zfill(3)}_{index}"
-
-                # Convert the row to a dictionary
-                row_data = row.to_dict()
-
-                # Serialize row value to bytes
-                serialized_value = serializer(
-                    value=row_data, ctx=SerializationContext(topic=topic.name)
-                )
-
-                # publish the data to the topic
-                producer.produce(
-                    topic=topic.name,
-                    key=message_key,
-                    value=serialized_value,
-                )
 
 if __name__ == "__main__":
     try:
