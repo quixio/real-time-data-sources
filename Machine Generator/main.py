@@ -101,12 +101,11 @@ class machine():
 
 
 def runMachine(m):
-    # KAFKA_BROKER = os.getenv('KAFKA_BROKER', "localhost:9092")
-    # KAFKA_TOPIC = os.getenv('KAFKA_TOPIC', "machine_topic")
+
     counter = 0
     counter2 = 0
 
-    sleeptime = 1
+    sleeptime = 0.25
     m.setLoad(randint(10, 50))
     increasing = True
     
