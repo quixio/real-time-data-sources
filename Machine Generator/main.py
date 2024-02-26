@@ -162,6 +162,13 @@ def runMachine(m):
         counter = counter + 1
         counter2 = counter2 + 1
 
+def main():
+    # Initialize a machine instance
+    m = machine()
+
+    # Start running the machine to produce data
+    runMachine(m)
+
 if __name__ == "__main__":
     try:
         main()
