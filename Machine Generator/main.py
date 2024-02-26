@@ -142,7 +142,7 @@ def runMachine(m):
                 m.setLoad(new_load)
                 counter2 = 0
         
-        message_key = f"INFLUX_DATA_{str(random.randint(1, 100)).zfill(3)}_{index}"
+        message_key = f"INFLUX_DATA_{str(random.randint(1, 100)).zfill(3)}_{counter}"
 
         # Publish messages to Kafka topic
         check_machine = m.returnMachineHealth()
