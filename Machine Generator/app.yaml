@@ -4,7 +4,7 @@ variables:
   - name: output
     inputType: OutputTopic
     description: This is the output topic for hello world data
-    defaultValue: hello-world-source
+    defaultValue: machine-generator-output
     required: true
 dockerfile: dockerfile
 runEntryPoint: main.py
