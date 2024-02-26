@@ -85,6 +85,20 @@ deployments:
         description: This is the output topic for hard braking events
         required: true
         value: enhanced-ai-chat-history
+  - name: F1 Demo Data
+    application: F1 Demo Data
+    deploymentType: Job
+    version: a9ce4707cba5ec02e0d4da1da97516d880788962
+    resources:
+      cpu: 200
+      memory: 200
+      replicas: 1
+    variables:
+      - name: Topic
+        inputType: OutputTopic
+        description: Name of the output topic to write into
+        required: true
+        value: f1-data
 
 # This section describes the Topics of the data pipeline
 topics:
