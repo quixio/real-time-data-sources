@@ -7,6 +7,7 @@ from threading import Event
 
 from random import  randint
 from time import sleep
+import logging
 
 # import vendor-specfic modules
 from quixstreams import Application
