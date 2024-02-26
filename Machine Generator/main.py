@@ -159,8 +159,8 @@ def runMachine(m):
                 key=message_key,
                 value=serialized_value,
             )
-        logger.info(f"Produced message with key:{message_key}, value:{obj}")
-        
+        logger.info(f"Produced message with key:{message_key}, value:{check_machine}")
+
         sleep(sleeptime)
         counter = counter + 1
         counter2 = counter2 + 1
