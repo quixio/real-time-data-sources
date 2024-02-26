@@ -95,8 +95,7 @@ class machine():
                 "data": [ {"temperature": self.returnTemperature()}, 
                          {"load": self.load}, 
                          {"power": self.returnPower()}, 
-                         {"vibration": self.returnVibration()}]
-                         }
+                         {"vibration": self.returnVibration()}]}
 
 
 
