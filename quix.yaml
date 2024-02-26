@@ -99,6 +99,21 @@ deployments:
         description: Name of the output topic to write into
         required: true
         value: f1-data
+  - name: Machine Generator
+    application: Machine Generator
+    deploymentType: Service
+    version: 301aef55bc9ab5c3b2b548475ef24923ef376dcb
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: Running
+    variables:
+      - name: output
+        inputType: OutputTopic
+        description: This is the output topic for hello world data
+        required: true
+        value: machine-generator-output
 
 # This section describes the Topics of the data pipeline
 topics:
